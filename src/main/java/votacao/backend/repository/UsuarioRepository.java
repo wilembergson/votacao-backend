@@ -12,4 +12,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, String> {
     UserDetails findByLogin(String login);
 
     Optional<Usuario> findByRole(String role);
+
+    Optional<Usuario> findByCpf(Long cpf);
 }

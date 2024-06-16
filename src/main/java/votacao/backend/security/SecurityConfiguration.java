@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(mvc.pattern(HttpMethod.POST, "/auth/login")).permitAll()
-                        .requestMatchers(mvc.pattern(HttpMethod.POST, "/user/register")).hasRole(RolesEnum.ADMIN.getRoleName())
+                        .requestMatchers(mvc.pattern(HttpMethod.POST, "/usuario/cadastrar")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
