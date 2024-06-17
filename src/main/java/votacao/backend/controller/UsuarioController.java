@@ -3,6 +3,7 @@ package votacao.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import votacao.backend.model.dto.LoginDTO;
 import votacao.backend.model.dto.NovoUsuarioDTO;
 import votacao.backend.model.dto.UsuarioInformacoesDTO;
 import votacao.backend.security.TokenService;
@@ -31,5 +32,12 @@ public class UsuarioController {
         Long cpf = tokenService.getUserCpf(token);
         UsuarioInformacoesDTO informacoes = this.usuarioService.obterInformacoes(cpf);
         return ResponseEntity.ok().body(informacoes);
+    }
+
+    @PutMapping("/atualizar")
+    public ResponseEntity atualizarAcesso(@RequestHeader("Authorization") String token, @RequestBody LoginDTO dto){
+        Long cpf = tokenService.getUserCpf(token);
+        this.usuarioService.atualizarAcesso(cpf, dto);
+        return ResponseEntity.ok().body(Map.of("mensagem", "Dados de acesso atualizados."));
     }
 }

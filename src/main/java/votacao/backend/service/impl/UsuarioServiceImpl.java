@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import votacao.backend.exceptions.CustomException;
+import votacao.backend.model.dto.LoginDTO;
 import votacao.backend.model.dto.NovoUsuarioDTO;
 import votacao.backend.model.dto.UsuarioInformacoesDTO;
 import votacao.backend.model.entity.Usuario;
@@ -48,5 +49,21 @@ public class UsuarioServiceImpl implements UsuarioService {
                 usuarioOpt.get().getLogin(),
                 usuarioOpt.get().getRole()
         );
+    }
+
+    @Override
+    public void atualizarAcesso(Long cpf, LoginDTO dto) {
+        Usuario usuario = this.obterUsuarioPorCpf(cpf);
+        String novaSenha = new BCryptPasswordEncoder().encode(dto.password());
+        usuario.setLogin(dto.login());
+        usuario.setPassword(novaSenha);
+        usuarioRepository.save(usuario);
+    }
+
+    private Usuario obterUsuarioPorCpf(Long cpf){
+        Optional<Usuario> usuarioOpt = this.usuarioRepository.findByCpf(cpf);
+        if(usuarioOpt.isEmpty())
+            throw new CustomException("Usuário não registrado.", HttpStatus.NOT_FOUND);
+        return usuarioOpt.get();
     }
 }
