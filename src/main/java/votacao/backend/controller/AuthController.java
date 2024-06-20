@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import votacao.backend.model.dto.LoginDTO;
-import votacao.backend.model.dto.LoginResponseDTO;
+import votacao.backend.model.dto.Usuario.LoginDTO;
+import votacao.backend.model.dto.Usuario.LoginResponseDTO;
 import votacao.backend.model.entity.Usuario;
 import votacao.backend.security.TokenService;
 

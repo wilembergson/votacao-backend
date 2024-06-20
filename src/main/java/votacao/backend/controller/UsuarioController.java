@@ -3,9 +3,9 @@ package votacao.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import votacao.backend.model.dto.LoginDTO;
-import votacao.backend.model.dto.NovoUsuarioDTO;
-import votacao.backend.model.dto.UsuarioInformacoesDTO;
+import votacao.backend.model.dto.Usuario.LoginDTO;
+import votacao.backend.model.dto.Usuario.NovoUsuarioDTO;
+import votacao.backend.model.dto.Usuario.UsuarioInformacoesDTO;
 import votacao.backend.security.TokenService;
 import votacao.backend.service.UsuarioService;
 
