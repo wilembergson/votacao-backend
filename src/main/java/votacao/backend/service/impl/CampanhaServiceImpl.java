@@ -1,25 +1,31 @@
 package votacao.backend.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import votacao.backend.exceptions.CustomException;
 import votacao.backend.model.dto.Campanha.NovaCampanhaDTO;
 import votacao.backend.model.entity.Campanha;
-import votacao.backend.repository.CampanhaReposritory;
+import votacao.backend.repository.CampanhaRepository;
 import votacao.backend.service.CampanhaService;
 import votacao.backend.utils.DateConverter;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class CampanhaServiceImpl implements CampanhaService {
 
     @Autowired
-    private CampanhaReposritory campanhaReposritory;
+    private CampanhaRepository campanhaReposritory;
 
 
     @Override
     public void novaCampanha(NovaCampanhaDTO dto) {
+        Optional<Campanha> campanhaOpt = this.campanhaReposritory.findByTitulo(dto.titulo());
+        if(campanhaOpt.isPresent())
+            throw new CustomException("Já existe uma campanha com este título.", HttpStatus.CONFLICT);
         Campanha campanha = new Campanha();
         campanha.setId(UUID.randomUUID().toString());
         campanha.setTitulo(dto.titulo());

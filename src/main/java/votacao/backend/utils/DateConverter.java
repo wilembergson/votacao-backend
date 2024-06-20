@@ -12,6 +12,8 @@ public class DateConverter {
     public static LocalDateTime stringToLocalDateTime(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         try {
+            if(dateString.equals(""))
+                return null;
             return LocalDateTime.parse(dateString, formatter);
         } catch (DateTimeParseException e) {
             throw new CustomException("Erro ao converter a data.", HttpStatus.CONFLICT);
