@@ -25,7 +25,7 @@ public class Campanha {
     private String descricao;
 
     @Column
-    private boolean votacao_aberta;
+    private Boolean votacao_aberta;
 
     @Column
     private LocalDateTime data_criacao;
