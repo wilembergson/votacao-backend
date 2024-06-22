@@ -5,14 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import votacao.backend.exceptions.CustomException;
 import votacao.backend.model.dto.Campanha.CampanhaInfoDTO;
-import votacao.backend.model.dto.Campanha.NovaCampanhaDTO;
+import votacao.backend.model.dto.Campanha.CampanhaDTO;
 import votacao.backend.model.entity.Campanha;
 import votacao.backend.repository.CampanhaRepository;
 import votacao.backend.service.CampanhaService;
 import votacao.backend.utils.DateConverter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,7 +25,7 @@ public class CampanhaServiceImpl implements CampanhaService {
 
 
     @Override
-    public void novaCampanha(NovaCampanhaDTO dto) {
+    public void novaCampanha(CampanhaDTO dto) {
         Optional<Campanha> campanhaOpt = this.campanhaReposritory.findByTitulo(dto.titulo());
         if(campanhaOpt.isPresent())
             throw new CustomException("Já existe uma campanha com este título.", HttpStatus.CONFLICT);
@@ -43,10 +42,7 @@ public class CampanhaServiceImpl implements CampanhaService {
 
     @Override
     public CampanhaInfoDTO obterPorId(String id) {
-        Optional<Campanha> campanhaOpt = this.campanhaReposritory.findById(id);
-        if(campanhaOpt.isEmpty())
-            throw new CustomException("Campanha não encontrada.", HttpStatus.NOT_FOUND);
-        Campanha cam = campanhaOpt.get();
+        Campanha cam = buscarPorId(id);
         return new CampanhaInfoDTO(
                 cam.getTitulo(),
                 cam.getDescricao(),
@@ -64,5 +60,24 @@ public class CampanhaServiceImpl implements CampanhaService {
                 .stream()
                 .filter(item -> item.getVotacao_aberta().equals(votacao_aberta))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void atualizar(String id, CampanhaDTO dto) {
+        Campanha campanha = buscarPorId(id);
+        LocalDateTime inicio = DateConverter.stringToLocalDateTime(dto.inicio_votacao());
+        LocalDateTime fim = DateConverter.stringToLocalDateTime(dto.fim_votacao());
+        campanha.setTitulo(dto.titulo());
+        campanha.setDescricao(dto.descricao());
+        campanha.setInicio_votacao(inicio);
+        campanha.setFim_votacao(fim);
+        campanhaReposritory.save(campanha);
+    }
+
+    private Campanha buscarPorId(String id){
+        Optional<Campanha> campanhaOpt = this.campanhaReposritory.findById(id);
+        if(campanhaOpt.isEmpty())
+            throw new CustomException("Campanha não encontrada.", HttpStatus.NOT_FOUND);
+        return campanhaOpt.get();
     }
 }

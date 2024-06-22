@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                         .requestMatchers(mvc.pattern(HttpMethod.POST, "/auth/login")).permitAll()
                         .requestMatchers(mvc.pattern(HttpMethod.POST, "/usuario/cadastrar")).permitAll()
                         .requestMatchers(mvc.pattern(HttpMethod.POST, "/campanha/cadastrar")).hasRole(RolesEnum.ADMIN.getRoleName())
+                        .requestMatchers(mvc.pattern(HttpMethod.PUT, "/campanha/atualizar/**")).hasRole(RolesEnum.ADMIN.getRoleName())
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

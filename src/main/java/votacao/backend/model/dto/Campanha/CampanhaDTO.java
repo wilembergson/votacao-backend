@@ -1,8 +1,6 @@
 package votacao.backend.model.dto.Campanha;
 
-import java.time.LocalDateTime;
-
-public record NovaCampanhaDTO(
+public record CampanhaDTO(
 
         String titulo,
 

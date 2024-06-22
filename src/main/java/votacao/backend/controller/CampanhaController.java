@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import votacao.backend.model.dto.Campanha.CampanhaAbertaDTO;
 import votacao.backend.model.dto.Campanha.CampanhaInfoDTO;
-import votacao.backend.model.dto.Campanha.NovaCampanhaDTO;
+import votacao.backend.model.dto.Campanha.CampanhaDTO;
 import votacao.backend.model.entity.Campanha;
 import votacao.backend.service.CampanhaService;
 
@@ -21,7 +21,7 @@ public class CampanhaController {
     private CampanhaService campanhaService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity cadastrarCampanha(@RequestBody NovaCampanhaDTO dto){
+    public ResponseEntity cadastrarCampanha(@RequestBody CampanhaDTO dto){
         this.campanhaService.novaCampanha(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("mensagem", "Nova campanha registrada."));
     }
@@ -36,5 +36,11 @@ public class CampanhaController {
     public ResponseEntity obterPorId(@PathVariable String id){
         CampanhaInfoDTO campanha = this.campanhaService.obterPorId(id);
         return ResponseEntity.ok(campanha);
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity atualizar(@PathVariable String id, @RequestBody CampanhaDTO dto){
+        this.campanhaService.atualizar(id, dto);
+        return ResponseEntity.ok(Map.of("mensagem", "As informações da campanha foram atualizadas."));
     }
 }
