@@ -8,6 +8,7 @@ import votacao.backend.model.dto.Usuario.NovoUsuarioDTO;
 import votacao.backend.model.dto.Usuario.UsuarioInformacoesDTO;
 import votacao.backend.security.TokenService;
 import votacao.backend.service.UsuarioService;
+import votacao.backend.utils.JsonRetorno;
 
 import java.util.Map;
 
@@ -24,20 +25,20 @@ public class UsuarioController {
     @PostMapping("/cadastrar")
     public ResponseEntity novoUsuario(@RequestBody NovoUsuarioDTO dto){
         this.usuarioService.novoUsuario(dto);
-        return ResponseEntity.ok().body(Map.of("mensagem", "Usuário cadastrado com sucesso."));
+        return ResponseEntity.ok(JsonRetorno.mensagem("Usuário cadastrado com sucesso."));
     }
 
     @GetMapping("/informacoes")
     public ResponseEntity obterInformacoes(@RequestHeader("Authorization") String token){
         Long cpf = tokenService.getUserCpf(token);
         UsuarioInformacoesDTO informacoes = this.usuarioService.obterInformacoes(cpf);
-        return ResponseEntity.ok().body(informacoes);
+        return ResponseEntity.ok(informacoes);
     }
 
     @PutMapping("/atualizar")
     public ResponseEntity atualizarAcesso(@RequestHeader("Authorization") String token, @RequestBody LoginDTO dto){
         Long cpf = tokenService.getUserCpf(token);
         this.usuarioService.atualizarAcesso(cpf, dto);
-        return ResponseEntity.ok().body(Map.of("mensagem", "Dados de acesso atualizados."));
+        return ResponseEntity.ok(JsonRetorno.mensagem("Dados de acesso atualizados."));
     }
 }

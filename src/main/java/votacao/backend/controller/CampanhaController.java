@@ -9,6 +9,7 @@ import votacao.backend.model.dto.Campanha.CampanhaInfoDTO;
 import votacao.backend.model.dto.Campanha.CampanhaDTO;
 import votacao.backend.model.entity.Campanha;
 import votacao.backend.service.CampanhaService;
+import votacao.backend.utils.JsonRetorno;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,9 @@ public class CampanhaController {
     @PostMapping("/cadastrar")
     public ResponseEntity cadastrarCampanha(@RequestBody CampanhaDTO dto){
         this.campanhaService.novaCampanha(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("mensagem", "Nova campanha registrada."));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(JsonRetorno.mensagem("Nova campanha registrada."));
     }
 
     @GetMapping("/listar")
@@ -41,6 +44,6 @@ public class CampanhaController {
     @PutMapping("/atualizar/{id}")
     public ResponseEntity atualizar(@PathVariable String id, @RequestBody CampanhaDTO dto){
         this.campanhaService.atualizar(id, dto);
-        return ResponseEntity.ok(Map.of("mensagem", "As informações da campanha foram atualizadas."));
+        return ResponseEntity.ok(JsonRetorno.mensagem("As informações da campanha foram atualizadas."));
     }
 }

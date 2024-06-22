@@ -14,6 +14,7 @@ import votacao.backend.model.dto.Usuario.LoginDTO;
 import votacao.backend.model.dto.Usuario.LoginResponseDTO;
 import votacao.backend.model.entity.Usuario;
 import votacao.backend.security.TokenService;
+import votacao.backend.utils.JsonRetorno;
 
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class AuthController {
         } catch (Exception e){
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("mensagem", "Usuário ou senha incorretos."));
+                    .body(JsonRetorno.mensagem("Usuário ou senha incorretos."));
         }
     }
 }
