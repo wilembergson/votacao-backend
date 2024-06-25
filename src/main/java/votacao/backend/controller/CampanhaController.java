@@ -37,7 +37,7 @@ public class CampanhaController {
 
     @GetMapping("/{id}")
     public ResponseEntity obterPorId(@PathVariable String id){
-        CampanhaInfoDTO campanha = this.campanhaService.obterPorId(id);
+        Campanha campanha = this.campanhaService.buscarPorId(id);
         return ResponseEntity.ok(campanha);
     }
 

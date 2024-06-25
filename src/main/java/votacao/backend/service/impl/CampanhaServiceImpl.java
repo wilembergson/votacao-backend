@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 import votacao.backend.exceptions.CustomException;
-import votacao.backend.model.dto.Campanha.CampanhaInfoDTO;
 import votacao.backend.model.dto.Campanha.CampanhaDTO;
 import votacao.backend.model.entity.Campanha;
 import votacao.backend.repository.CampanhaRepository;
@@ -33,7 +32,6 @@ public class CampanhaServiceImpl implements CampanhaService {
     private ConcurrentHashMap<String, ScheduledFuture<?>> inicioVotacaoTasks = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, ScheduledFuture<?>> fimVotacaoTasks = new ConcurrentHashMap<>();
 
-
     @Override
     @Transactional
     public void novaCampanha(CampanhaDTO dto) {
@@ -54,20 +52,6 @@ public class CampanhaServiceImpl implements CampanhaService {
     }
 
     @Override
-    public CampanhaInfoDTO obterPorId(String id) {
-        Campanha cam = buscarCampanha(id);
-        return new CampanhaInfoDTO(
-                cam.getTitulo(),
-                cam.getDescricao(),
-                cam.getVotacao_aberta(),
-                cam.getData_criacao(),
-                cam.getInicio_votacao(),
-                cam.getFim_votacao(),
-                cam.getCandidatos()
-        );
-    }
-
-    @Override
     public List<Campanha> listar(Boolean votacao_aberta) {
         List<Campanha> lista = this.campanhaRepository.findAll();
         return lista
@@ -78,7 +62,7 @@ public class CampanhaServiceImpl implements CampanhaService {
 
     @Override
     public void atualizar(String id, CampanhaDTO dto) {
-        Campanha campanha = buscarCampanha(id);
+        Campanha campanha = buscarPorId(id);
         LocalDateTime inicio = DateConverter.stringToLocalDateTime(dto.inicio_votacao());
         LocalDateTime fim = DateConverter.stringToLocalDateTime(dto.fim_votacao());
         campanha.setTitulo(dto.titulo());
@@ -89,7 +73,8 @@ public class CampanhaServiceImpl implements CampanhaService {
         scheduleTasksForCampanha(campanha);
     }
 
-    private Campanha buscarCampanha(String id){
+    @Override
+    public Campanha buscarPorId(String id){
         Optional<Campanha> campanhaOpt = this.campanhaRepository.findById(id);
         if(campanhaOpt.isEmpty())
             throw new CustomException("Campanha não encontrada.", HttpStatus.NOT_FOUND);

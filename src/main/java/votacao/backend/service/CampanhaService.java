@@ -9,7 +9,7 @@ import java.util.List;
 public interface CampanhaService {
     void novaCampanha(CampanhaDTO dto);
 
-    CampanhaInfoDTO obterPorId(String id);
+    Campanha buscarPorId(String id);
 
     List<Campanha> listar(Boolean votacao_aberta);
 
