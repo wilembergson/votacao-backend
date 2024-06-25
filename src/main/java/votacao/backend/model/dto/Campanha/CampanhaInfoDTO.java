@@ -1,6 +1,9 @@
 package votacao.backend.model.dto.Campanha;
 
+import votacao.backend.model.entity.Candidato;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record CampanhaInfoDTO(
 
@@ -14,6 +17,8 @@ public record CampanhaInfoDTO(
 
         LocalDateTime inicio_votacao,
 
-        LocalDateTime fim_votacao
+        LocalDateTime fim_votacao,
+
+        List<Candidato> candidatos
 ) {
 }

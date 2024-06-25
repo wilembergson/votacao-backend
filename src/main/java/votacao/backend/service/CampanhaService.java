@@ -14,4 +14,5 @@ public interface CampanhaService {
     List<Campanha> listar(Boolean votacao_aberta);
 
     void atualizar(String id, CampanhaDTO dto);
+
 }
