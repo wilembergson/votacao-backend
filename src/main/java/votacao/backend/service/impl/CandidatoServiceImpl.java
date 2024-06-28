@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import votacao.backend.exceptions.CustomException;
+import votacao.backend.model.dto.Candidato.BuscarCandidatoDTO;
 import votacao.backend.model.dto.Candidato.CandidatoDTO;
 import votacao.backend.model.entity.Campanha;
 import votacao.backend.model.entity.Candidato;
@@ -41,6 +42,17 @@ public class CandidatoServiceImpl implements CandidatoService {
                 campanha
         );
         candidatoRepository.save(candidato);
+    }
+
+    @Override
+    public Candidato buscarPorNumero(BuscarCandidatoDTO dto) {
+        Campanha campanha = buscarCampanha(dto.campanhaId());
+        Optional<Candidato> candidatoOpt = campanha.getCandidatos().stream()
+                .filter(item -> item.getNumero().equals(dto.numero()))
+                .findFirst();
+        if(candidatoOpt.isEmpty())
+            throw new CustomException("Número inválido nesta campanha.", HttpStatus.NOT_FOUND);
+        return candidatoOpt.get();
     }
 
     private Campanha buscarCampanha(String id){

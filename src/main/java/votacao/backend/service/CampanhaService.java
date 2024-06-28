@@ -2,6 +2,7 @@ package votacao.backend.service;
 
 import votacao.backend.model.dto.Campanha.CampanhaDTO;
 import votacao.backend.model.entity.Campanha;
+import votacao.backend.model.entity.Candidato;
 
 import java.util.List;
 

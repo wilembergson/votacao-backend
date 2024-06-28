@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface CandidatoRepository extends JpaRepository<Candidato, String> {
 
     Optional<Candidato> findByNumero(Integer numero);
+
 }
