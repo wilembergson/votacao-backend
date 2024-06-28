@@ -28,4 +28,10 @@ public class CandidatoController {
         Candidato candidato = candidatoService.buscarPorNumero(dto);
         return ResponseEntity.ok(candidato);
     }
+
+    @DeleteMapping("/remover/{id}")
+    public ResponseEntity deletar(@PathVariable String id){
+        candidatoService.deletarPorId(id);
+        return ResponseEntity.ok(JsonRetorno.mensagem("Candidato removido da campanha."));
+    }
 }

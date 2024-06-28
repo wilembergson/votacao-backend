@@ -55,6 +55,14 @@ public class CandidatoServiceImpl implements CandidatoService {
         return candidatoOpt.get();
     }
 
+    @Override
+    public void deletarPorId(String id) {
+        Optional<Candidato> candidatoOpt = candidatoRepository.findById(id);
+        if(candidatoOpt.isEmpty())
+            throw new CustomException("ID do candidato inválido.", HttpStatus.NOT_FOUND);
+        candidatoRepository.delete(candidatoOpt.get());
+    }
+
     private Campanha buscarCampanha(String id){
         Optional<Campanha> campanhaOpt = campanhaRepository.findById(id);
         if(campanhaOpt.isEmpty())
