@@ -39,7 +39,8 @@ public class CandidatoServiceImpl implements CandidatoService {
                 UUID.randomUUID().toString(),
                 dto.nome(),
                 numero,
-                campanha
+                campanha,
+                null
         );
         candidatoRepository.save(candidato);
     }

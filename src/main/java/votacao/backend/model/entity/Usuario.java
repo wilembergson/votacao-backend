@@ -1,8 +1,7 @@
 package votacao.backend.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +36,10 @@ public class Usuario implements UserDetails {
 
     @Column
     private String role;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Voto> votos;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

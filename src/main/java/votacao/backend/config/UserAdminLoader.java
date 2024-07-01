@@ -32,7 +32,8 @@ public class UserAdminLoader implements CommandLineRunner {
                     null,
                     adm,
                     new BCryptPasswordEncoder().encode(password),
-                    RolesEnum.ADMIN.getRoleName()
+                    RolesEnum.ADMIN.getRoleName(),
+                    null
             );
             userRepository.save(admin);
         }

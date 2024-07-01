@@ -39,4 +39,8 @@ public class Campanha {
     @OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Candidato> candidatos;
+
+    @OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Voto> votos;
 }
