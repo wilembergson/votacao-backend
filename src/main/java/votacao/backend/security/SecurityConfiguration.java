@@ -49,6 +49,7 @@ public class SecurityConfiguration {
                         .requestMatchers(mvc.pattern(HttpMethod.PUT, "/campanha/atualizar/**")).hasRole(RolesEnum.ADMIN.getRoleName())
                         .requestMatchers(mvc.pattern(HttpMethod.POST, "/candidato/registrar-em-campanha/**")).hasRole(RolesEnum.ADMIN.getRoleName())
                         .requestMatchers(mvc.pattern(HttpMethod.DELETE, "/candidato/remover/**")).hasRole(RolesEnum.ADMIN.getRoleName())
+                        .requestMatchers(mvc.pattern(HttpMethod.POST, "/voto/novo")).hasRole(RolesEnum.COMMON.getRoleName())
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
