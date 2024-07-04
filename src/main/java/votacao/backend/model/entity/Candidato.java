@@ -32,4 +32,8 @@ public class Candidato {
     @OneToMany(mappedBy = "candidato", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Voto> votos;
+
+    public Integer getTotal_votos(){
+        return this.votos.size();
+    }
 }

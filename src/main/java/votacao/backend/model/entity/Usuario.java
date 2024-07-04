@@ -37,10 +37,6 @@ public class Usuario implements UserDetails {
     @Column
     private String role;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Voto> votos;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(getRole().equals(RolesEnum.ADMIN.getRoleName())){

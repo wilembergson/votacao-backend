@@ -33,8 +33,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 Long.parseLong(dto.cpf()),
                 dto.login(),
                 new BCryptPasswordEncoder().encode(dto.password()),
-                RolesEnum.COMMON.getRoleName(),
-                null
+                RolesEnum.COMMON.getRoleName()
         );
         usuarioRepository.save(usuario);
     }

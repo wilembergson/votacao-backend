@@ -55,6 +55,12 @@ public class TokenService {
         return decodedJWT.getClaim("cpf").asLong();
     }
 
+    public String getLogin(String requestToken) {
+        String token = requestToken.replace("Bearer ", "");
+        DecodedJWT decodedJWT = getDecodeJWT(token);
+        return decodedJWT.getSubject();
+    }
+
     private DecodedJWT getDecodeJWT(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);

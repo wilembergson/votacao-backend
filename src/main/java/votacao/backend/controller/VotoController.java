@@ -19,10 +19,11 @@ public class VotoController {
     @Autowired
     private TokenService tokenService;
 
-    @PostMapping("/novo")
-    public ResponseEntity votar(@RequestBody VotoDTO dto, @RequestHeader("Authorization") String token){
+    @PostMapping("/registrar/{senha}")
+    public ResponseEntity votar(@RequestBody VotoDTO dto, @PathVariable String senha, @RequestHeader("Authorization") String token){
         Long cpf = tokenService.getUserCpf(token);
-        votoService.novoVoto(dto, cpf);
+        String login = tokenService.getLogin(token);
+        votoService.novoVoto(dto, login, senha);
         return ResponseEntity.status(HttpStatus.CREATED).body(JsonRetorno.mensagem("Voto registrado."));
     }
 

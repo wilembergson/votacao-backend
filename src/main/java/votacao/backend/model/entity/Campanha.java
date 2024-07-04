@@ -43,4 +43,5 @@ public class Campanha {
     @OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Voto> votos;
+    
 }
