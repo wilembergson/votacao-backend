@@ -30,15 +30,15 @@ public class UsuarioController {
 
     @GetMapping("/informacoes")
     public ResponseEntity obterInformacoes(@RequestHeader("Authorization") String token){
-        Long cpf = tokenService.getUserCpf(token);
-        UsuarioInformacoesDTO informacoes = this.usuarioService.obterInformacoes(cpf);
+        String login = tokenService.getLogin(token);
+        UsuarioInformacoesDTO informacoes = this.usuarioService.obterInformacoes(login);
         return ResponseEntity.ok(informacoes);
     }
 
     @PutMapping("/atualizar")
     public ResponseEntity atualizarAcesso(@RequestHeader("Authorization") String token, @RequestBody LoginDTO dto){
-        Long cpf = tokenService.getUserCpf(token);
-        this.usuarioService.atualizarAcesso(cpf, dto);
+        String loginAtual = tokenService.getLogin(token);
+        this.usuarioService.atualizarAcesso(loginAtual, dto);
         return ResponseEntity.ok(JsonRetorno.mensagem("Dados de acesso atualizados."));
     }
 }

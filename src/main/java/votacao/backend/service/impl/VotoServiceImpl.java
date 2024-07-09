@@ -19,7 +19,6 @@ import votacao.backend.repository.CandidatoRepository;
 import votacao.backend.repository.UsuarioRepository;
 import votacao.backend.repository.VotoRepository;
 import votacao.backend.service.VotoService;
-import votacao.backend.utils.JsonRetorno;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -83,8 +82,6 @@ public class VotoServiceImpl implements VotoService {
 
     private Usuario obterUsuario(String login, String password){
         try{
-            System.out.println("LOGIN: "+ login);
-            System.out.println("SENHA: "+ password);
             var usernamePassword = new UsernamePasswordAuthenticationToken(login, password);
             var auth = this.authenticationManager.authenticate(usernamePassword);
             return (Usuario) auth.getPrincipal();

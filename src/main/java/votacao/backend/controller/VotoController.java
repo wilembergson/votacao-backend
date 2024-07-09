@@ -21,7 +21,6 @@ public class VotoController {
 
     @PostMapping("/registrar/{senha}")
     public ResponseEntity votar(@RequestBody VotoDTO dto, @PathVariable String senha, @RequestHeader("Authorization") String token){
-        Long cpf = tokenService.getUserCpf(token);
         String login = tokenService.getLogin(token);
         votoService.novoVoto(dto, login, senha);
         return ResponseEntity.status(HttpStatus.CREATED).body(JsonRetorno.mensagem("Voto registrado."));

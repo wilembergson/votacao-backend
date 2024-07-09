@@ -39,31 +39,32 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioInformacoesDTO obterInformacoes(Long cpf) {
-        Optional<Usuario> usuarioOpt = this.usuarioRepository.findByCpf(cpf);
-        if(usuarioOpt.isEmpty())
+    public UsuarioInformacoesDTO obterInformacoes(String login) {
+        //Optional<Usuario> usuarioOpt = this.usuarioRepository.findByCpf(cpf);
+        Usuario usuarioOpt = (Usuario) usuarioRepository.findByLogin(login);
+        if(usuarioOpt == null)
             throw new CustomException("Usuário não registrado.", HttpStatus.NOT_FOUND);
         return new UsuarioInformacoesDTO(
-                usuarioOpt.get().getName(),
-                usuarioOpt.get().getCpf(),
-                usuarioOpt.get().getLogin(),
-                usuarioOpt.get().getRole()
+                usuarioOpt.getName(),
+                usuarioOpt.getCpf(),
+                usuarioOpt.getLogin(),
+                usuarioOpt.getRole()
         );
     }
 
     @Override
-    public void atualizarAcesso(Long cpf, LoginDTO dto) {
-        Usuario usuario = this.obterUsuarioPorCpf(cpf);
+    public void atualizarAcesso(String loginAtual, LoginDTO dto) {
+        Usuario usuario = this.obterUsuarioPorCpf(loginAtual);
         String novaSenha = new BCryptPasswordEncoder().encode(dto.password());
         usuario.setLogin(dto.login());
         usuario.setPassword(novaSenha);
         usuarioRepository.save(usuario);
     }
 
-    private Usuario obterUsuarioPorCpf(Long cpf){
-        Optional<Usuario> usuarioOpt = this.usuarioRepository.findByCpf(cpf);
-        if(usuarioOpt.isEmpty())
+    private Usuario obterUsuarioPorCpf(String login){
+        Usuario usuario = (Usuario) this.usuarioRepository.findByLogin(login);
+        if(usuario == null)
             throw new CustomException("Usuário não registrado.", HttpStatus.NOT_FOUND);
-        return usuarioOpt.get();
+        return usuario;
     }
 }

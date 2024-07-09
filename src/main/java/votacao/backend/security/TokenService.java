@@ -29,10 +29,10 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("votacao-api")
                     .withSubject(usr.getLogin())
-                    .withClaim(
+                    /*.withClaim(
                             "cpf",
                             (usr.getCpf() != null) ? usr.getCpf() : 00000000000
-                    )
+                    )*/
                     .withClaim("role", usr.getRole())
                     .withExpiresAt(expirationTime())
                     .sign(algorithm);
@@ -49,11 +49,11 @@ public class TokenService {
         return new ValidateTokenDTO(login, role);
     }
 
-    public Long getUserCpf(String requestToken) {
+    /*public Long getUserCpf(String requestToken) {
         String token = requestToken.replace("Bearer ", "");
         DecodedJWT decodedJWT = getDecodeJWT(token);
         return decodedJWT.getClaim("cpf").asLong();
-    }
+    }*/
 
     public String getLogin(String requestToken) {
         String token = requestToken.replace("Bearer ", "");

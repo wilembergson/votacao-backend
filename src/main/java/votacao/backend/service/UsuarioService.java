@@ -7,7 +7,7 @@ import votacao.backend.model.dto.Usuario.UsuarioInformacoesDTO;
 public interface UsuarioService {
     void novoUsuario(NovoUsuarioDTO dto);
 
-    UsuarioInformacoesDTO obterInformacoes(Long cpf);
+    UsuarioInformacoesDTO obterInformacoes(String login);
 
-    void atualizarAcesso(Long cpf, LoginDTO dto);
+    void atualizarAcesso(String loginAtual, LoginDTO dto);
 }

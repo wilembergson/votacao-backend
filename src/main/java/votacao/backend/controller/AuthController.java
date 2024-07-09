@@ -16,8 +16,6 @@ import votacao.backend.model.entity.Usuario;
 import votacao.backend.security.TokenService;
 import votacao.backend.utils.JsonRetorno;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
