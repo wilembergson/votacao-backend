@@ -8,6 +8,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 import votacao.backend.exceptions.CustomException;
 import votacao.backend.model.dto.Campanha.CampanhaDTO;
+import votacao.backend.model.dto.Campanha.CampanhaInfoDTO;
 import votacao.backend.model.entity.Campanha;
 import votacao.backend.repository.CampanhaRepository;
 import votacao.backend.service.CampanhaService;
@@ -52,12 +53,20 @@ public class CampanhaServiceImpl implements CampanhaService {
     }
 
     @Override
-    public List<Campanha> listar(Boolean votacao_aberta) {
+    public List<CampanhaInfoDTO> listar() {
         List<Campanha> lista = this.campanhaRepository.findAll();
-        return lista
+        List<CampanhaInfoDTO> listaDTO = lista
                 .stream()
-                .filter(item -> item.getVotacao_aberta().equals(votacao_aberta))
-                .collect(Collectors.toList());
+                .map(item -> new CampanhaInfoDTO(
+                        item.getId(),
+                        item.getTitulo(),
+                        item.getDescricao(),
+                        item.getVotacao_aberta(),
+                        item.getData_criacao(),
+                        item.getInicio_votacao(),
+                        item.getFim_votacao()
+                )).toList();
+        return listaDTO;
     }
 
     @Override

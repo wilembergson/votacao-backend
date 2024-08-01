@@ -5,14 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import votacao.backend.model.dto.Campanha.CampanhaAbertaDTO;
-import votacao.backend.model.dto.Campanha.CampanhaInfoDTO;
 import votacao.backend.model.dto.Campanha.CampanhaDTO;
+import votacao.backend.model.dto.Campanha.CampanhaInfoDTO;
 import votacao.backend.model.entity.Campanha;
 import votacao.backend.service.CampanhaService;
 import votacao.backend.utils.JsonRetorno;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/campanha")
@@ -30,8 +29,8 @@ public class CampanhaController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity listar(@RequestBody CampanhaAbertaDTO dto){
-        List<Campanha> campanhas = this.campanhaService.listar(dto.votacao_aberta());
+    public ResponseEntity listar(){
+        List<CampanhaInfoDTO> campanhas = this.campanhaService.listar();
         return ResponseEntity.ok(campanhas);
     }
 
