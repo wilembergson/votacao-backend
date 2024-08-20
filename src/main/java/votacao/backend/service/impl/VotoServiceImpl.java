@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import votacao.backend.exceptions.CustomException;
 import votacao.backend.model.dto.Usuario.LoginResponseDTO;
+import votacao.backend.model.dto.Voto.ComprovanteVotoDTO;
 import votacao.backend.model.dto.Voto.VotoDTO;
 import votacao.backend.model.entity.Campanha;
 import votacao.backend.model.entity.Candidato;
@@ -45,7 +46,7 @@ public class VotoServiceImpl implements VotoService {
     private CandidatoRepository candidatoRepository;
 
     @Override
-    public void novoVoto(VotoDTO dto, String login, String password) {
+    public ComprovanteVotoDTO novoVoto(VotoDTO dto, String login, String password) {
         Optional<Campanha> campanhaOpt = campanhaRepository.findById(dto.id_campanha());
         if(campanhaOpt.isEmpty())
             throw new CustomException("ID da campanha invátido.", HttpStatus.NOT_FOUND);
@@ -71,6 +72,15 @@ public class VotoServiceImpl implements VotoService {
                 candidatoOpt.get()
         );
         votoRepository.save(voto);
+        return new ComprovanteVotoDTO(
+                campanhaOpt.get().getId(),
+                campanhaOpt.get().getTitulo(),
+                usuario.getName(),
+                usuario.getCpf().toString(),
+                voto.getId(),
+                candidatoOpt.get().getId(),
+                candidatoOpt.get().getNome()
+        );
     }
 
     private void checarVoto(String login, String password, String usuario_hash){

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import votacao.backend.model.dto.Voto.ComprovanteVotoDTO;
 import votacao.backend.model.dto.Voto.VotoDTO;
 import votacao.backend.security.TokenService;
 import votacao.backend.service.VotoService;
@@ -22,8 +23,8 @@ public class VotoController {
     @PostMapping("/registrar/{senha}")
     public ResponseEntity votar(@RequestBody VotoDTO dto, @PathVariable String senha, @RequestHeader("Authorization") String token){
         String login = tokenService.getLogin(token);
-        votoService.novoVoto(dto, login, senha);
-        return ResponseEntity.status(HttpStatus.CREATED).body(JsonRetorno.mensagem("Voto registrado."));
+        ComprovanteVotoDTO comprovante =  votoService.novoVoto(dto, login, senha);
+        return ResponseEntity.status(HttpStatus.CREATED).body(comprovante);
     }
 
 }
